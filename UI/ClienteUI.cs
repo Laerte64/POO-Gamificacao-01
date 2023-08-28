@@ -10,16 +10,8 @@ namespace Gamificacao1
          private static List<Cliente> Clientes = new List<Cliente>;
          private static int ContadorId = 0;
 
-         public ClienteUI 
-         { 
-	        Clientes = new List<Cliente>();
-
-         }
-
-        public void AdicionarCliente()
-        {
-
-        //Id Nome Sobrenome Endereco NumeroTelefone 
+         public void AdicionarCliente()
+         {
             string nome;
 
             do
@@ -67,15 +59,15 @@ namespace Gamificacao1
 
             Cliente cliente = new(ContadorId, nome, sobrenome, endereco, numeroTelefone);
             Clientes.Add(cliente)
-            ContadorID++;
+                ContadorID++;
 
             Console.WriteLine();
-            Console.WriteLine("Precione qualquer tecla para retornar.");
+            Console.WriteLine("Pressione qualquer tecla para retornar.");
             Console.ReadKey();
 
-        }
+         }
 
-        public void RemoverCliente()
+        public void DeletarCliente()
         {
 
             int id = 0;
@@ -100,7 +92,7 @@ namespace Gamificacao1
                 if (verificacao.ToUpper() == "SIM")
                 {
                     Clientes.RemoveAll(cliente => cliente.Id == id);
-                    Console.WriteLine("Cliente deletadO com Sucesso.");
+                    Console.WriteLine("Cliente deletado com Sucesso.");
                 }
                 else
                 {
@@ -113,7 +105,7 @@ namespace Gamificacao1
             }
 
             Console.WriteLine();
-            Console.WriteLine("Precione qualquer tecla para retornar.");
+            Console.WriteLine("Pressione qualquer tecla para retornar.");
             Console.ReadKey();
 
 
@@ -146,7 +138,7 @@ namespace Gamificacao1
             }
 
             Console.WriteLine();
-            Console.WriteLine("Precione qualquer tecla para retornar.");
+            Console.WriteLine("Pressione qualquer tecla para retornar.");
             Console.ReadKey();
 
         }
@@ -172,7 +164,7 @@ namespace Gamificacao1
 
                 Console.WriteLine($"Cliente não encontrada");
                 Console.WriteLine();
-                Console.WriteLine("Precione qualquer tecla para retornar.");
+                Console.WriteLine("Pressione qualquer tecla para retornar.");
                 Console.ReadKey();
                 return;
 
@@ -225,7 +217,7 @@ namespace Gamificacao1
             }
 
             Console.WriteLine();
-            Console.WriteLine("Precione qualquer tecla para retornar.");
+            Console.WriteLine("Pressione qualquer tecla para retornar.");
             Console.ReadKey();
         }
 
@@ -236,8 +228,8 @@ namespace Gamificacao1
             do
             {
                 Console.Clear();
-                Console.WriteLine("--- Tela de Categorias ---\n");
-             
+                Console.WriteLine("--- Tela de Clientes ---\n");
+
                 Console.WriteLine("1 - Listar clientes;");
                 Console.WriteLine("2 - Buscar por ID;");
                 Console.WriteLine("3 - Adicionar cliente;");
@@ -254,24 +246,49 @@ namespace Gamificacao1
         }
 
         static public void Tela()
+        {
+            int opcao = 0;
+            bool rodando = true;
+
+
+            while (rodando)
             {
-                int opcao = 0;
-                bool rodando = true;
 
-
-                while (rodando)
+                switch (opcao)
                 {
-
-
-
-
-
-
+                    case 0:
+                        opcao = MenuPrincipal();
+                        break;
+                    case 1:
+                        ListarClientes();
+                        opcao = 0;
+                        break;
+                    case 2:
+                        BuscarClientePorID();
+                        opcao = 0;
+                        break;
+                    case 3:
+                        AdicionarCliente();
+                        opcao = 0;
+                        break;
+                    case 4:
+                        AlterarCliente();
+                        opcao = 0;
+                        break;
+                    case 5:
+                        DeletarCliente();
+                        opcao = 0;
+                        break;
+                    case 6:
+                        rodando = false;
+                        break;
+                    
                 }
-            
-
 
             }
 
         }
+
+    }
+
 }
