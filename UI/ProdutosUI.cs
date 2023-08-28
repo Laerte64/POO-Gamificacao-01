@@ -2,14 +2,20 @@ using System;
 using System.Collections.Generic;
 
 class ProdutoUI {
-    // ...
+    public List<Produto> Produtos;
+    private int ContadorID;
 
-    public static void MostrarMenuProduto() {
+    public ProdutoUI() {
+        Produtos = new List<Produto>();
+        ContadorID = 1;
+    }
+
+    public void MostrarMenuProduto() {
         int opcao = 0;
         bool rodando = true;
 
         while (rodando) {
-            Console.Clear(); 
+            Console.Clear();
             Console.WriteLine("===== Menu Produto =====");
             Console.WriteLine("1. Registrar Produto");
             Console.WriteLine("2. Excluir Produto");
@@ -38,36 +44,54 @@ class ProdutoUI {
             }
         }
     }
-}
 
-class Program {
-    static void Main(string[] args) {
-        int opcao = 0;
-        bool rodando = true;
+    private void RegistrarProduto() {
+        Console.WriteLine("Informe o nome do produto:");
+        string nome = Console.ReadLine();
 
-        while (rodando) {
-            Console.Clear(); 
-            Console.WriteLine("===== Menu Principal =====");
-            Console.WriteLine("1. Gerenciar Produtos");
-            // ...
+        Console.WriteLine("Informe a descrição do produto:");
+        string descricao = Console.ReadLine();
 
-            Console.WriteLine("0. Sair");
-            opcao = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine("Informe o preço do produto:");
+        decimal preco = Convert.ToDecimal(Console.ReadLine());
 
-            switch (opcao) {
-                case 1:
-                    ProdutoUI.MostrarMenuProduto();
-                    break;
-                
+        Console.WriteLine("Informe a categoria do produto:");
+        string categoriaNome = Console.ReadLine();
 
-                case 0:
-                    Console.WriteLine("Encerrando o programa.");
-                    rodando = false;
-                    break;
-                default:
-                    Console.WriteLine("Escolha inválida. Tente novamente.");
-                    break;
-            }
+        Categoria categoria = new Categoria {
+            Id = ContadorID++,
+            Nome = categoriaNome
+        };
+
+        Produto produto = new Produto {
+            Id = ContadorID++,
+            Nome = nome,
+            Descricao = descricao,
+            Preco = preco,
+            Categoria = categoria
+        };
+
+        Produtos.Add(produto);
+        Console.WriteLine("Produto registrado com sucesso!");
+    }
+
+    private void ExcluirProduto() {
+        Console.WriteLine("Informe o ID do produto que deseja excluir:");
+        int idParaExcluir = Convert.ToInt32(Console.ReadLine());
+
+        Produto produtoParaExcluir = Produtos.Find(p => p.Id == idParaExcluir);
+        if (produtoParaExcluir != null) {
+            Produtos.Remove(produtoParaExcluir);
+            Console.WriteLine("Produto excluído com sucesso!");
+        } else {
+            Console.WriteLine("Produto não encontrado.");
+        }
+    }
+
+    private void MostrarProdutos() {
+        Console.WriteLine("Lista de Produtos:");
+        foreach (Produto produto in Produtos) {
+            Console.WriteLine($"ID: {produto.Id}, Nome: {produto.Nome}, Preço: {produto.Preco}");
         }
     }
 }
