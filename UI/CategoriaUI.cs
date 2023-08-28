@@ -44,7 +44,7 @@ namespace Gamificacao1
             {
                 Console.Clear();
                 Console.Write("Insira o ID para procurar: ");
-                string entrada = Console.ReadLine() ?? "0";
+                string entrada = Console.ReadLine() ?? "";
                 int.TryParse(entrada, out id);
             } while (id <= 0);
 
@@ -82,12 +82,12 @@ namespace Gamificacao1
         static private void AlterarCategoria()
         {
             int id;
-            bool inputValido
+            bool inputValido;
             do
             {
                 Console.Clear();
                 Console.Write("Insira o ID da Categoria que deseja alterar: ");
-                string entrada = Console.ReadLine() ?? "0";
+                string entrada = Console.ReadLine() ?? "";
                 inputValido = int.TryParse(entrada, out id);
             } while (!inputValido);
 
@@ -138,14 +138,15 @@ namespace Gamificacao1
 
         static private void BuscarCategoriaPorID()
         {
-            int id = 0;
+            int id;
+            bool inputValido;
             do
             {
                 Console.Clear();
                 Console.Write("Insira o ID para procurar: ");
-                string entrada = Console.ReadLine() ?? "0";
-                int.TryParse(entrada, out id);
-            } while (id <= 0);
+                string entrada = Console.ReadLine() ?? "";
+                inputValido = int.TryParse(entrada, out id);
+            } while (!inputValido);
 
             Categoria categoria = Categorias.Find(categoria => categoria.Id == id);
 
@@ -168,7 +169,7 @@ namespace Gamificacao1
 
         static public int MenuPrincipal()
         {
-            int opcao = 0;
+            int opcao;
             do
             {
                 Console.Clear();
@@ -183,7 +184,7 @@ namespace Gamificacao1
                 Console.WriteLine();
                 Console.WriteLine("Selecione uma opção");
 
-                string entrada = Console.ReadLine() ?? "0";
+                string entrada = Console.ReadLine() ?? "";
                 int.TryParse(entrada, out opcao);
             } while (opcao > 6 || opcao <= 0);
             return opcao;
