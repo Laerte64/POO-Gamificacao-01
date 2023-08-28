@@ -9,7 +9,7 @@ namespace Gamificacao1
     {
         private static List<Cliente> Clientes = new List<Cliente>;
 
-        private static int ContadorId = 0;
+        private static int ContadorId = 1;
 
     }
 
@@ -44,14 +44,14 @@ public void RemoverCliente(int id)
 
 }
 
-public ListarClientes()
-{
-    Console.WriteLine("Lista de Clientes:");
-    foreach (Cliente cliente in clientes)
+    public ListarClientes()
     {
+        Console.WriteLine("Lista de Clientes:");
+        foreach (Cliente cliente in clientes)
+        {
         Console.WriteLine($"  ID: {cliente.Id}, Nome: {cliente.Nome} {cliente.Sobrenome}, Endereço: {cliente.Endereco}, Telefone: {cliente.Telefone}");
-    }
+        }
 
-}
+    }
 
 }
