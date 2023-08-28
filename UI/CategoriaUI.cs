@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Security.Cryptography.X509Certificates;
-using Gamificacao1;
 
-namespace GF1.UI
+namespace Gamificacao1
 {
     class CategoriaUI
     {
