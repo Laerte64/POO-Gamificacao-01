@@ -122,7 +122,7 @@ namespace Gamificacao1
             Console.Write("Insira a descrição da Categoria: ");
             string descricao = Console.ReadLine() ?? "";
             descricao = descricao.TrimEnd('\n');
-            if (!string.IsNullOrEmpty(nome))
+            if (!string.IsNullOrEmpty(descricao))
             {
                 categoria.Descricao = descricao;
             }
