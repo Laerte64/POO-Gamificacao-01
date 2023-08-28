@@ -39,7 +39,7 @@ namespace Gamificacao1
 
         static private void DeletarCategoria()
         {
-            int id = 0;
+            int id;
             do
             {
                 Console.Clear();
@@ -81,14 +81,15 @@ namespace Gamificacao1
 
         static private void AlterarCategoria()
         {
-            int id = -1;
+            int id;
+            bool inputValido
             do
             {
                 Console.Clear();
                 Console.Write("Insira o ID da Categoria que deseja alterar: ");
                 string entrada = Console.ReadLine() ?? "0";
-                int.TryParse(entrada, out id);
-            } while (id < 0);
+                inputValido = int.TryParse(entrada, out id);
+            } while (!inputValido);
 
             Categoria? categoria = Categorias.Find(categoria => categoria.Id == id);
 
