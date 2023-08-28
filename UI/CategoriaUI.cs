@@ -3,18 +3,12 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Gamificacao1
 {
-    class CategoriaUI
+    static class CategoriaUI
     {
-        public List<Categoria> Categorias;
-        private int ContadorID;
+        static public List<Categoria> Categorias = new List<Categoria>();;
+        static private int ContadorID = 1;
 
-        public CategoriaUI()
-        {
-            Categorias = new List<Categoria>();
-            ContadorID = 1;
-        }
-
-        private void AdicionarCategoria()
+        static private void AdicionarCategoria()
         {
             string nome;
             do
@@ -43,7 +37,7 @@ namespace Gamificacao1
             Console.ReadKey();
         }
 
-        private void DeletarCategoria()
+        static private void DeletarCategoria()
         {
             int id = 0;
             do
@@ -85,7 +79,7 @@ namespace Gamificacao1
 
         }
 
-        private void AlterarCategoria()
+        static private void AlterarCategoria()
         {
             int id = -1;
             do
@@ -128,7 +122,7 @@ namespace Gamificacao1
             }
         }
 
-        private void ListarCategorias()
+        static private void ListarCategorias()
         {
             Console.WriteLine("Lista de Categorias:");
             Console.WriteLine();
@@ -141,7 +135,7 @@ namespace Gamificacao1
             Console.ReadKey();
         }
 
-        private void BuscarCategoriaPorID()
+        static private void BuscarCategoriaPorID()
         {
             int id = 0;
             do
@@ -171,7 +165,7 @@ namespace Gamificacao1
             Console.ReadKey();
         }
 
-        public int MenuPrincipal()
+        static public int MenuPrincipal()
         {
             int opcao = 0;
             do
@@ -194,7 +188,7 @@ namespace Gamificacao1
             return opcao;
         }
 
-        public void Tela()
+        static public void Tela()
         {
             int opcao = 0;
             bool rodando = true;
