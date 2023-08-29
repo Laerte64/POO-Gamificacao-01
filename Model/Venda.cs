@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gamificacao1
 {
-    public class Venda
+    internal class Venda
     {
         public int Id { get; set; }
         public Cliente Cliente { get; set; }
