@@ -1,0 +1,15 @@
+C:\Users\ledur\source\repos\Gamificacao1\Gamificacao1\bin\Debug\net6.0\Gamificacao1.exe
+C:\Users\ledur\source\repos\Gamificacao1\Gamificacao1\bin\Debug\net6.0\Gamificacao1.deps.json
+C:\Users\ledur\source\repos\Gamificacao1\Gamificacao1\bin\Debug\net6.0\Gamificacao1.runtimeconfig.json
+C:\Users\ledur\source\repos\Gamificacao1\Gamificacao1\bin\Debug\net6.0\Gamificacao1.dll
+C:\Users\ledur\source\repos\Gamificacao1\Gamificacao1\bin\Debug\net6.0\Gamificacao1.pdb
+C:\Users\ledur\source\repos\Gamificacao1\Gamificacao1\obj\Debug\net6.0\Gamificacao1.csproj.AssemblyReference.cache
+C:\Users\ledur\source\repos\Gamificacao1\Gamificacao1\obj\Debug\net6.0\Gamificacao1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ledur\source\repos\Gamificacao1\Gamificacao1\obj\Debug\net6.0\Gamificacao1.AssemblyInfoInputs.cache
+C:\Users\ledur\source\repos\Gamificacao1\Gamificacao1\obj\Debug\net6.0\Gamificacao1.AssemblyInfo.cs
+C:\Users\ledur\source\repos\Gamificacao1\Gamificacao1\obj\Debug\net6.0\Gamificacao1.csproj.CoreCompileInputs.cache
+C:\Users\ledur\source\repos\Gamificacao1\Gamificacao1\obj\Debug\net6.0\Gamificacao1.dll
+C:\Users\ledur\source\repos\Gamificacao1\Gamificacao1\obj\Debug\net6.0\refint\Gamificacao1.dll
+C:\Users\ledur\source\repos\Gamificacao1\Gamificacao1\obj\Debug\net6.0\Gamificacao1.pdb
+C:\Users\ledur\source\repos\Gamificacao1\Gamificacao1\obj\Debug\net6.0\Gamificacao1.genruntimeconfig.cache
+C:\Users\ledur\source\repos\Gamificacao1\Gamificacao1\obj\Debug\net6.0\ref\Gamificacao1.dll
