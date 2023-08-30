@@ -1,83 +1,348 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Gamificacao1
 {
-    static class VendaUI
+    internal class VendaUI
     {
-        static public List<Venda> Vendas = new List<Venda>();
-        static private int ContadorID = 1;
+        private int _contadorID;
 
-        static private void AdicionarVenda()
+        public VendaUI()
         {
-            int idCliente;
-            Cliente cliente;
+            _contadorID = 1;
+
+            Venda venda;
+            List<(Produto, int)> produtosVendidos;
+
+            produtosVendidos = new List<(Produto, int)> ();
+            produtosVendidos.Add((Produto.Lista[0], 2));
+            produtosVendidos.Add((Produto.Lista[1], 1));
+            venda = new Venda(_contadorID++, Cliente.Lista[0], produtosVendidos);
+            Venda.Lista.Add(venda);
+
+            produtosVendidos = new List<(Produto, int)>();
+            produtosVendidos.Add((Produto.Lista[2], 1));
+            produtosVendidos.Add((Produto.Lista[1], 2));
+            venda = new Venda(_contadorID++, Cliente.Lista[1], produtosVendidos);
+            Venda.Lista.Add(venda);
+
+            produtosVendidos = new List<(Produto, int)>();
+            produtosVendidos.Add((Produto.Lista[0], 1));
+            produtosVendidos.Add((Produto.Lista[2], 2));
+            venda = new Venda(_contadorID++, Cliente.Lista[2], produtosVendidos);
+            Venda.Lista.Add(venda);
+        }
+
+        public void Tela()
+        {
+            int opcao;
+            bool rodando = true;
+
+            while (rodando)
+            {
+                do
+                {
+                    Console.Clear();
+                    Console.WriteLine("--- Tela de Vendas ---");
+                    Console.WriteLine();
+                    Console.WriteLine("1 - Listar Vendas;");
+                    Console.WriteLine("2 - Buscar por ID;");
+                    Console.WriteLine("3 - Adicionar Venda;");
+                    Console.WriteLine("4 - Atualizar por ID;");
+                    Console.WriteLine("5 - Deletar por ID;");
+                    Console.WriteLine("6 - Retornar ao Menu Principal.");
+                    Console.WriteLine();
+                    Console.Write("Selecione uma opção: ");
+
+                    string entrada = Console.ReadLine() ?? "";
+                    int.TryParse(entrada, out opcao);
+                } while (opcao <= 0 || opcao > 6);
+
+                Console.Clear();
+                switch (opcao)
+                {
+                    case 1:
+                        ListarVendas();
+                        break;
+                    case 2:
+                        BuscarVendaPorID();
+                        break;
+                    case 3:
+                        AdicionarVenda();
+                        break;
+                    case 4:
+                        AlterarVenda();
+                        break;
+                    case 5:
+                        DeletarVenda();
+                        break;
+                    case 6:
+                        rodando = false;
+                        break;
+                }
+            }
+        }
+
+        private void ListarVendas()
+        {
+            Console.WriteLine("Lista de Vendas:");
+            Console.WriteLine();
+            foreach (var venda in Venda.Lista)
+            {
+                Console.WriteLine($"ID: {venda.ID}, Cliente: {venda.Cliente.Nome}, Data: {venda.DataVenda}");
+                Console.WriteLine("Produtos:");
+                foreach ((Produto produto, int quantidade) in venda.ProdutosVendidos)
+                {
+                    Console.WriteLine($"{quantidade} x {produto.Nome}");
+                }
+                Console.WriteLine();
+            }
+
+            Console.WriteLine("Precione qualquer tecla para retornar.");
+            Console.ReadKey();
+        }
+
+        private void BuscarVendaPorID()
+        {
+            int id;
             do
             {
                 Console.Clear();
-                Console.Write("Insira o ID do Cliente: ");
-                string entrada = Console.ReadLine() ?? "0";
-                int.TryParse(entrada, out idCliente);
-                Cliente cliente = ClienteUI.Clientes.Find(cliente => cliente.Id == idCliente);
-            } while (cliente == null);
+                Console.Write("Insira o ID para procurar: ");
+                string entrada = Console.ReadLine() ?? "";
+                int.TryParse(entrada, out id);
+            } while (id <= 0);
 
-            List<Produto> produtosVendidos = new List<Produto>();
-            string input;
-            do
+            Venda? venda = Venda.Lista.Find(venda => venda.ID == id);
+
+            Console.WriteLine();
+
+            if (venda != null)
             {
-                Console.Clear();
-                Console.Write("Adicione um Produto por ID (Deixe em branco para prosseguir): ");
-                input = Console.ReadLine() ?? "";
-                input = descricao.TrimEnd('\n');
-                int.TryParse(entrada, out int idProduto);
-                Produto produto = ProdutoUI.Produtos.Find(produto => produto.Id == idCliente)
-            } while (!string.IsNullOrEmpty(input));
-
-            DateTime data;
-            string input;
-            do
+                Console.WriteLine("Venda Encontrada:");
+                Console.WriteLine($"ID: {venda.ID}, Cliente: {venda.Cliente.Nome}, Data: {venda.DataVenda}");
+                Console.WriteLine("Produtos:");
+                foreach ((Produto produto, int quantidade) in venda.ProdutosVendidos)
+                {
+                    Console.WriteLine($"{quantidade} x {produto.Nome}");
+                }
+            }
+            else
             {
-                Console.Clear();
-                Console.Write("Insira a descrição da Categoria: ");
-                input = Console.ReadLine() ?? "";
-                input = descricao.TrimEnd('\n');
-            } while (!string.IsNullOrEmpty(input));
-
-
-            Categoria categoria = new Categoria(ContadorID, nome, descricao);
-            Categorias.Add(categoria);
-            ContadorID++;
+                Console.WriteLine($"Venda não encontrada");
+            }
 
             Console.WriteLine();
             Console.WriteLine("Precione qualquer tecla para retornar.");
             Console.ReadKey();
         }
 
-        static private void DeletarCategoria()
+        private void AdicionarVenda()
         {
-            int id = 0;
+            Cliente? cliente;
+            string input;
+            do
+            {
+                Console.Clear();
+                Console.Write("Insira o ID do Cliente que realizou a Venda: ");
+                input = Console.ReadLine() ?? "";
+                if (string.IsNullOrEmpty(input))
+                {
+                    Console.WriteLine("Adição da Venda abortada.");
+                    Console.WriteLine();
+                    Console.WriteLine("Precione qualquer tecla para retornar.");
+                    Console.ReadKey();
+                    return;
+                }
+                int.TryParse(input, out int id);
+                cliente = Cliente.Lista.Find(cliente => cliente.ID == id);
+            } while (cliente == null);
+
+            List<(Produto, int)> produtosVendidos = new List<(Produto, int)>();
+            do
+            {
+                Console.Clear();
+                Console.Write("Insira o ID de em Produto da Venda (vazio para finalizar venda): ");
+                input = Console.ReadLine() ?? "";
+                input = input.TrimEnd('\n');
+                int.TryParse(input, out int id);
+                Produto? produto = Produto.Lista.Find(produto => produto.ID == id);
+
+                int quantidade = 0;
+                if (!string.IsNullOrEmpty(input))
+                {
+                    if (produto == null)
+                    {
+                        continue;
+                    }
+                    else if (produtosVendidos.FindAll(item => item.Item1.ID == id).Count > 0)
+                    {
+                        continue;
+                    }
+
+                    bool inputValido;
+                    do
+                    {
+                        Console.Clear();
+                        Console.Write("Insira a quantida do Produto na Venda: ");
+                        input = Console.ReadLine() ?? "";
+                        inputValido = int.TryParse(input, out quantidade);
+                        if (inputValido && quantidade == 0)
+                        {
+                            break;
+                        }
+                    } while (quantidade <= 0);
+                }
+
+                if (produto != null && quantidade > 0)
+                {
+                    produtosVendidos.Add((produto, quantidade));
+                }
+
+            } while (!string.IsNullOrEmpty(input));
+
+            if (produtosVendidos.Count == 0)
+            {
+                Console.WriteLine("Adição da Venda abortada.");
+                Console.WriteLine();
+                Console.WriteLine("Precione qualquer tecla para retornar.");
+                Console.ReadKey();
+                return;
+            }
+
+            Venda venda = new Venda(_contadorID, cliente, produtosVendidos);
+            Venda.Lista.Add(venda);
+
+            Console.WriteLine();
+            Console.WriteLine("Precione qualquer tecla para retornar.");
+            Console.ReadKey();
+        }
+
+        private void AlterarVenda()
+        {
+            int id;
+            do
+            {
+                Console.Clear();
+                Console.Write("Insira o ID da Venda que deseja alterar: ");
+                string entrada = Console.ReadLine() ?? "";
+                int.TryParse(entrada, out id);
+            } while (id <= 0);
+
+            Venda? venda = Venda.Lista.Find(venda => venda.ID == id);
+
+            Console.WriteLine();
+
+            if (venda == null)
+            {
+                Console.WriteLine($"Venda não encontrada");
+                Console.WriteLine();
+                Console.WriteLine("Precione qualquer tecla para retornar.");
+                Console.ReadKey();
+                return;
+            }
+
+            Cliente? cliente = null;
+            string input;
+            do
+            {
+                Console.Clear();
+                Console.Write("Insira um novo ID do Cliente (vazio para não alterar): ");
+                input = Console.ReadLine() ?? "";
+                if (string.IsNullOrEmpty(input))
+                {
+                    break;
+                }
+                int.TryParse(input, out id);
+                cliente = Cliente.Lista.Find(cliente => cliente.ID == id);
+            } while (cliente == null);
+            if (cliente != null)
+            {
+                venda.Cliente = cliente;
+            }
+
+            List<(Produto, int)> produtosVendidos = new List<(Produto, int)>();
+            do
+            {
+                Console.Clear();
+                Console.Write("Insira o ID de em Produto da Venda (nenhum item para não alterar) (vazio para finalizar venda): ");
+                input = Console.ReadLine() ?? "";
+                input = input.TrimEnd('\n');
+                int.TryParse(input, out id);
+                Produto? produto = Produto.Lista.Find(produto => produto.ID == id);
+
+                int quantidade = 0;
+                if (!string.IsNullOrEmpty(input))
+                {
+                    if (produto == null)
+                    {
+                        continue;
+                    }
+                    else if (produtosVendidos.FindAll(item => item.Item1.ID == id).Count > 0)
+                    {
+                        continue;
+                    }
+
+                    bool inputValido;
+                    do
+                    {
+                        Console.Clear();
+                        Console.Write("Insira a quantida do Produto na Venda: ");
+                        input = Console.ReadLine() ?? "";
+                        inputValido = int.TryParse(input, out quantidade);
+                        if (inputValido && quantidade == 0)
+                        {
+                            break;
+                        }
+                    } while (quantidade <= 0);
+                }
+
+                if (produto != null && quantidade > 0)
+                {
+                    produtosVendidos.Add((produto, quantidade));
+                }
+
+            } while (!string.IsNullOrEmpty(input));
+
+            if (produtosVendidos.Count > 0)
+            {
+                venda.ProdutosVendidos = produtosVendidos;
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Precione qualquer tecla para retornar.");
+            Console.ReadKey();
+        }
+
+        private void DeletarVenda()
+        {
+            int id;
             do
             {
                 Console.Clear();
                 Console.Write("Insira o ID para procurar: ");
-                string entrada = Console.ReadLine() ?? "0";
+                string entrada = Console.ReadLine() ?? "";
                 int.TryParse(entrada, out id);
             } while (id <= 0);
 
-            Categoria categoria = Categorias.Find(categoria => categoria.Id == id);
+            Venda? venda = Venda.Lista.Find(venda => venda.ID == id);
 
             Console.WriteLine();
-
-            if (categoria != null)
+            if (venda != null)
             {
-                Console.WriteLine("Categoria Encontrada:");
-                Console.WriteLine($"ID: {categoria.Id}, Nome: {categoria.Nome}, Descrição: {categoria.Descricao}");
+                Console.WriteLine("Venda Encontrada:");
+                Console.WriteLine($"ID: {venda.ID}, Cliente: {venda.Cliente.Nome}, Data: {venda.DataVenda}");
+                Console.WriteLine("Produtos:");
+                foreach ((Produto produto, int quantidade) in venda.ProdutosVendidos)
+                {
+                    Console.WriteLine($"{quantidade} x {produto.Nome}");
+                }
+                Console.WriteLine();
                 Console.WriteLine("Tem Certeza? (Para confirmar, \"Sim\") ");
-                string? verificacao = Console.ReadLine();
+                string verificacao = Console.ReadLine() ?? "";
                 if (verificacao.ToUpper() == "SIM")
                 {
-                    Categorias.RemoveAll(categoria => categoria.Id == id);
-                    Console.WriteLine("Categoria deletada com Sucesso.");
+                    Venda.Lista.RemoveAll(venda => venda.ID == id);
+                    Console.WriteLine("Venda deletada com Sucesso.");
                 }
                 else
                 {
@@ -86,162 +351,13 @@ namespace Gamificacao1
             }
             else
             {
-                Console.WriteLine($"Categoria não encontrada");
+                Console.WriteLine($"Venda não encontrada");
             }
 
             Console.WriteLine();
             Console.WriteLine("Precione qualquer tecla para retornar.");
             Console.ReadKey();
 
-        }
-
-        static private void AlterarCategoria()
-        {
-            int id = -1;
-            do
-            {
-                Console.Clear();
-                Console.Write("Insira o ID da Categoria que deseja alterar: ");
-                string entrada = Console.ReadLine() ?? "0";
-                int.TryParse(entrada, out id);
-            } while (id < 0);
-
-            Categoria? categoria = Categorias.Find(categoria => categoria.Id == id);
-
-            Console.WriteLine();
-
-            if (categoria == null)
-            {
-                Console.WriteLine($"Categoria não encontrada");
-                Console.WriteLine();
-                Console.WriteLine("Precione qualquer tecla para retornar.");
-                Console.ReadKey();
-                return;
-            }
-
-            Console.Clear();
-            Console.Write("Insira um novo Nome (deixe vazio para não alterar): ");
-            string nome = Console.ReadLine() ?? "";
-            nome = nome.TrimEnd('\n');
-            if (!string.IsNullOrEmpty(nome))
-            {
-                categoria.Nome = nome;
-            }
-
-            Console.Clear();
-            Console.Write("Insira a descrição da Categoria: ");
-            string descricao = Console.ReadLine() ?? "";
-            descricao = descricao.TrimEnd('\n');
-            if (!string.IsNullOrEmpty(descricao))
-            {
-                categoria.Descricao = descricao;
-            }
-        }
-
-        static private void ListarCategorias()
-        {
-            Console.WriteLine("Lista de Categorias:");
-            Console.WriteLine();
-            foreach (var categoria in Categorias)
-            {
-                Console.WriteLine($"ID: {categoria.Id}, Nome: {categoria.Nome}, Descrição: {categoria.Descricao}");
-            }
-            Console.WriteLine();
-            Console.WriteLine("Precione qualquer tecla para retornar.");
-            Console.ReadKey();
-        }
-
-        static private void BuscarCategoriaPorID()
-        {
-            int id = 0;
-            do
-            {
-                Console.Clear();
-                Console.Write("Insira o ID para procurar: ");
-                string entrada = Console.ReadLine() ?? "0";
-                int.TryParse(entrada, out id);
-            } while (id <= 0);
-
-            Categoria categoria = Categorias.Find(categoria => categoria.Id == id);
-
-            Console.WriteLine();
-
-            if (categoria != null)
-            {
-                Console.WriteLine("Categoria Encontrada:");
-                Console.WriteLine($"ID: {categoria.Id}, Nome: {categoria.Nome}, Descrição: {categoria.Descricao}");
-            }
-            else
-            {
-                Console.WriteLine($"Categoria não encontrada");
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("Precione qualquer tecla para retornar.");
-            Console.ReadKey();
-        }
-
-        static public int MenuPrincipal()
-        {
-            int opcao = 0;
-            do
-            {
-                Console.Clear();
-                Console.WriteLine("--- Tela de Categorias ---");
-                Console.WriteLine();
-                Console.WriteLine("1 - Listar Categorias;");
-                Console.WriteLine("2 - Buscar por ID;");
-                Console.WriteLine("3 - Adicionar Categoria;");
-                Console.WriteLine("4 - Atualizar por ID;");
-                Console.WriteLine("5 - Deletar por ID;");
-                Console.WriteLine("6 - Retornar ao Menu Principal.");
-                Console.WriteLine();
-                Console.WriteLine("Selecione uma opção");
-
-                string entrada = Console.ReadLine() ?? "0";
-                int.TryParse(entrada, out opcao);
-            } while (opcao > 6 || opcao <= 0);
-            return opcao;
-        }
-
-        static public void Tela()
-        {
-            int opcao = 0;
-            bool rodando = true;
-
-            while (rodando)
-            {
-                Console.Clear();
-                switch (opcao)
-                {
-                    case 0:
-                        opcao = MenuPrincipal();
-                        break;
-                    case 1:
-                        ListarCategorias();
-                        opcao = 0;
-                        break;
-                    case 2:
-                        BuscarCategoriaPorID();
-                        opcao = 0;
-                        break;
-                    case 3:
-                        AdicionarCategoria();
-                        opcao = 0;
-                        break;
-                    case 4:
-                        AlterarCategoria();
-                        opcao = 0;
-                        break;
-                    case 5:
-                        DeletarCategoria();
-                        opcao = 0;
-                        break;
-                    case 6:
-                        rodando = false;
-                        break;
-                }
-            }
         }
     }
 }
