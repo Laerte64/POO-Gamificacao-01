@@ -1,4 +1,4 @@
-# POO Gamificacao 01
+# POO Gamificaçao 01
 Atividade de gamificação referente a matéria de Programação Orientada a Objeto
  
 **Como executar:**
