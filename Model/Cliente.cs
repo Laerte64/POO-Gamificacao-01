@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gamificacao1
 {
     internal class Cliente
     {
-        public int Id { get; set; }
+        public static List<Cliente> Lista = new List<Cliente>();
+
+        public int ID { get; set; }
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
         public string Endereco { get; set; }
@@ -16,7 +14,7 @@ namespace Gamificacao1
 
         public Cliente(int id, string nome, string sobrenome, string endereco, string numeroTelefone)
         {
-            Id = id;
+            ID = id;
             Nome = nome;
             Sobrenome = sobrenome;
             Endereco = endereco;
