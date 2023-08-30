@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gamificacao1
 {
-    public class Categoria
+    internal class Categoria
     {
-        public int Id { get; set; }
+        public static List<Categoria> Lista = new List<Categoria>();
+
+        public int ID { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
 
         public Categoria(int id, string nome, string descricao)
         {
-            Id = id;
+            ID = id;
             Nome = nome;
             Descricao = descricao;
         }

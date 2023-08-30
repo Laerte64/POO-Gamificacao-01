@@ -1,30 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Gamificacao1
 {
-    public class Venda
+    internal class Venda
     {
-        public int Id { get; set; }
+        public static List<Venda> Lista = new List<Venda>();
+
+        public int ID { get; set; }
         public Cliente Cliente { get; set; }
-        public List<Produto> ProdutosVendidos { get; set; }
+        public List<(Produto, int)> ProdutosVendidos { get; set; }
         public DateTime DataVenda { get; set; }
         public decimal ValorTotal { get; set; }
 
-        public Venda(int id, Cliente cliente, List<Produto> produtosVendidos, DateTime dataVenda)
+        public Venda(int id, Cliente cliente, List<(Produto, int)> produtosVendidos)
         {
-            Id = id;
+            ID = id;
             Cliente = cliente;
             ProdutosVendidos = produtosVendidos;
-            DataVenda = dataVenda;
+            DataVenda = DateTime.Today;
 
             ValorTotal = 0;
-            foreach (Produto produto in produtosVendidos)
+            foreach ((Produto produto, int quantidade) in produtosVendidos)
             {
-                ValorTotal += produto.Preco;
+                ValorTotal += quantidade * produto.Preco;
             }
         }
     }
