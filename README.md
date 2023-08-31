@@ -3,5 +3,3 @@ Atividade de gamificação referente a matéria de Programação Orientada a Obj
  
 **Como executar:**
 usando o visual studio, abra o arquivo Gamificacao1.sln
-
-**Link:** https://github.com/Laerte64/POO-Gamificacao-01/tree/Codigo-Final
