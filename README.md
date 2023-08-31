@@ -3,3 +3,5 @@ Atividade de gamificação referente a matéria de Programação Orientada a Obj
  
 **Como executar:**
 usando o visual studio, abra o arquivo Gamificacao1.sln
+
+**Alunos:** Laerte Menegol Ledur, Daniel Mahl Gregorini, Cayo Cezar.
